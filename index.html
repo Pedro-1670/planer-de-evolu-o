@@ -1,0 +1,535 @@
+    <!DOCTYPE html>
+<html lang="pt-BR" data-theme="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Agenda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/themes.css">
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                    <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                <span class="logo-text">Minha Agenda</span>
+            </div>
+            <button class="collapse-btn" id="collapseBtn" aria-label="Recolher sidebar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="#diario" class="nav-item" data-page="diario">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span class="nav-label">Diário</span>
+            </a>
+            <a href="#semana" class="nav-item" data-page="semana">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span class="nav-label">Semanal</span>
+            </a>
+            <a href="#mensal" class="nav-item" data-page="mensal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="16" y1="2" x2="16" y2="6"></line><line x1="7" y1="14" x2="7" y2="18"></line><line x1="12" y1="14" x2="12" y2="18"></line><line x1="17" y1="14" x2="17" y2="18"></line></svg>
+                <span class="nav-label">Mensal</span>
+            </a>
+            <a href="#metas" class="nav-item" data-page="metas">
+
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                <span class="nav-label">Metas</span>
+            </a>
+            <a href="#notas" class="nav-item" data-page="notas">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span class="nav-label">Anotações</span>
+            </a>
+            <a href="#configuracoes" class="nav-item" data-page="configuracoes">
+
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span class="nav-label">Configurações</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="avatar">U</div>
+                <div class="user-meta">
+                    <span class="user-name">Visitante</span>
+                    <span class="user-plan">Personal</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <!-- DASHBOARD -->
+        <section class="page active" id="page-dashboard">
+            <div class="dashboard-header">
+                <h1 class="greeting" id="greeting">Bom dia</h1>
+                <p class="date-display" id="dateDisplay"></p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openTaskModal('diario')">
+
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nova Tarefa
+                </button>
+            </div>
+            <div class="dashboard-grid">
+                <div class="dashboard-card focus-card">
+                    <div class="card-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                        Foco do Dia
+                    </div>
+                    <p class="focus-text" id="focusTask">Nenhuma tarefa definida como foco</p>
+                    <button class="btn-text" onclick="App.setFocusTask()">Definir foco</button>
+                </div>
+                <div class="dashboard-card goal-card">
+                    <div class="card-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                        Meta do Mês
+                    </div>
+                    <p class="goal-text" id="goalText">Nenhuma meta definida</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="goalProgress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-label" id="goalPercent">0%</span>
+                </div>
+            </div>
+            <div class="task-section">
+                <h2 class="section-title">Acompanhamento</h2>
+                <div class="dashboard-overview" aria-label="Resumo do sistema">
+                    <div class="overview-grid">
+                        <div class="overview-card">
+                            <div class="card-label">Tarefas diárias</div>
+                            <div class="overview-value" id="dashboardDailyCount">0</div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-label">Tarefas semanais</div>
+                            <div class="overview-value" id="dashboardWeeklyCount">0</div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-label">Tarefas mensais</div>
+                            <div class="overview-value" id="dashboardMonthlyCount">0</div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-label">Concluídas</div>
+                            <div class="overview-value" id="dashboardCompletedCount">0</div>
+                        </div>
+                        <div class="overview-card" style="grid-column: 1/-1;">
+                            <div class="card-label">Categorias mais utilizadas</div>
+                            <div class="category-most-used" id="dashboardTopCategories"></div>
+                        </div>
+                        <div class="overview-card" style="grid-column: 1/-1;">
+                            <div class="card-label">Próximas tarefas importantes</div>
+                            <div class="next-tasks" id="dashboardNextTasks"></div>
+                        </div>
+                        <div class="overview-card" style="grid-column: 1/-1;">
+                            <div class="card-label">Visão rápida da semana</div>
+                            <div class="week-quick" id="dashboardWeekQuick"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- DIÁRIO -->
+        <section class="page" id="page-diario">
+            <div class="page-header">
+                <h1>Diário</h1>
+                <p class="page-subtitle" id="todayDate"></p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openTaskModal('diario')">
+
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nova Tarefa
+                </button>
+            </div>
+            <div class="task-list" id="todayTasks"></div>
+        </section>
+
+        <!-- SEMANAL -->
+        <section class="page" id="page-semana">
+
+
+
+            <div class="page-header">
+                <h1>Esta Semana</h1>
+                <p class="page-subtitle" id="weekDate"></p>
+            </div>
+            <div class="page-actions">
+                    <button class="btn btn-primary" onclick="App.openTaskModal('semana')">
+
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nova Tarefa
+                </button>
+            </div>
+            <div class="task-list" id="weekTasks"></div>
+        </section>
+
+        <!-- MENSAL -->
+        <section class="page" id="page-mensal">
+            <div class="page-header">
+                <h1>Este Mês</h1>
+                <p class="page-subtitle" id="monthDate"></p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openTaskModal('mensal')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nova Tarefa
+                </button>
+            </div>
+            <div class="task-list" id="monthTasks"></div>
+        </section>
+
+        <!-- METAS -->
+        <section class="page" id="page-metas">
+
+            <div class="page-header">
+                <h1>Metas</h1>
+                <p class="page-subtitle">Defina e acompanhe seus objetivos mensais</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openGoalModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nova Meta
+                </button>
+            </div>
+            <div class="goals-grid" id="goalsGrid"></div>
+        </section>
+
+        <!-- CATEGORIAS -->
+        <section class="page" id="page-categorias">
+            <div class="page-header">
+                <h1>Categorias</h1>
+                <p class="page-subtitle">Organize suas tarefas por categoria</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openCategoryModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nova Categoria
+                </button>
+            </div>
+            <div class="categories-grid" id="categoriesGrid"></div>
+        </section>
+
+        <!-- HÁBITOS -->
+        <section class="page" id="page-habitos">
+            <div class="page-header">
+                <h1>Hábitos</h1>
+                <p class="page-subtitle">Construa rotinas saudáveis</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openHabitModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Novo Hábito
+                </button>
+            </div>
+            <div class="habits-list" id="habitsList"></div>
+        </section>
+
+        <!-- NOTAS -->
+        <section class="page" id="page-notas">
+            <div class="page-header">
+                <h1>Notas</h1>
+                <p class="page-subtitle">Capture suas ideias</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openNoteModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Nova Nota
+                </button>
+            </div>
+            <div class="notes-grid" id="notesGrid"></div>
+        </section>
+
+        <!-- CONFIGURAÇÕES -->
+        <section class="page" id="page-configuracoes">
+
+            <div class="page-header">
+                <h1>Configurações</h1>
+                <p class="page-subtitle">Personalize sua experiência</p>
+            </div>
+            <div class="settings-section">
+                <h2 class="settings-title">Aparência</h2>
+                <div class="theme-grid" id="themeGrid"></div>
+            </div>
+            <div class="settings-section">
+                <h2 class="settings-title">Dados</h2>
+                <div class="settings-actions">
+                    <button class="btn btn-primary" onclick="App.editAgendaName()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        Alterar nome da agenda
+                    </button>
+                    <button class="btn btn-danger" onclick="App.clearAllData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        Limpar Todos os Dados
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- TASK MODAL -->
+    <div class="modal-overlay" id="taskModal" style="display:none;">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="taskModalTitle">Nova Tarefa</h3>
+                <button class="modal-close" onclick="App.closeTaskModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <form class="modal-form" onsubmit="App.saveTask(event)">
+                <input type="hidden" id="taskId">
+                <div class="form-group">
+                    <label class="form-label">Título</label>
+                    <input type="text" class="form-input" id="taskTitle" placeholder="O que precisa ser feito?" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Categoria</label>
+                        <select class="form-select" id="taskCategory"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prioridade</label>
+                        <select class="form-select" id="taskPriority">
+                            <option value="baixa">Baixa</option>
+                            <option value="media" selected>Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Data de Vencimento</label>
+                    <input type="date" class="form-input" id="taskDueDate">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-textarea" id="taskDescription" placeholder="Detalhes adicionais..." rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeTaskModal()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="taskDeleteBtn" style="display:none;" onclick="App.deleteTask()">Excluir</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- GOAL MODAL -->
+    <div class="modal-overlay" id="goalModal" style="display:none;">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="goalModalTitle">Nova Meta</h3>
+                <button class="modal-close" onclick="App.closeGoalModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <form class="modal-form" onsubmit="App.saveGoal(event)">
+                <input type="hidden" id="goalId">
+                <div class="form-group">
+                    <label class="form-label">Título da Meta</label>
+                    <input type="text" class="form-input" id="goalTitle" placeholder="Ex: Ler 12 livros este ano" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Progresso (%)</label>
+                        <input type="number" class="form-input" id="goalProgressValue" min="0" max="100" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mês</label>
+                        <input type="month" class="form-input" id="goalMonth">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prazo</label>
+                        <input type="date" class="form-input" id="goalDeadline">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeGoalModal()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="goalDeleteBtn" style="display:none;" onclick="App.deleteGoal()">Excluir</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CATEGORY MODAL -->
+    <div class="modal-overlay" id="categoryModal" style="display:none;">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="categoryModalTitle">Nova Categoria</h3>
+                <button class="modal-close" onclick="App.closeCategoryModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <form class="modal-form" onsubmit="App.saveCategory(event)">
+                <input type="hidden" id="categoryId">
+                <div class="form-group">
+                    <label class="form-label">Nome</label>
+                    <input type="text" class="form-input" id="categoryName" placeholder="Nome da categoria" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Cor</label>
+                    <div class="color-picker" id="colorPicker">
+                        <button type="button" class="color-option active" data-color="#6366f1" style="background:#6366f1"></button>
+                        <button type="button" class="color-option" data-color="#ef4444" style="background:#ef4444"></button>
+                        <button type="button" class="color-option" data-color="#f59e0b" style="background:#f59e0b"></button>
+                        <button type="button" class="color-option" data-color="#10b981" style="background:#10b981"></button>
+                        <button type="button" class="color-option" data-color="#3b82f6" style="background:#3b82f6"></button>
+                        <button type="button" class="color-option" data-color="#8b5cf6" style="background:#8b5cf6"></button>
+                        <button type="button" class="color-option" data-color="#ec4899" style="background:#ec4899"></button>
+                        <button type="button" class="color-option" data-color="#14b8a6" style="background:#14b8a6"></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ícone</label>
+                    <select class="form-select" id="categoryIcon">
+                        <option value="📁">📁 Pasta</option>
+                        <option value="💼">💼 Trabalho</option>
+                        <option value="📚">📚 Estudos</option>
+                        <option value="💪">💪 Saúde</option>
+                        <option value="🏠">🏠 Casa</option>
+                        <option value="💰">💰 Finanças</option>
+                        <option value="🎯">🎯 Metas</option>
+                        <option value="✈️">✈️ Viagem</option>
+                        <option value="🎨">🎨 Criativo</option>
+                        <option value="⚡">⚡ Rápido</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeCategoryModal()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="categoryDeleteBtn" style="display:none;" onclick="App.deleteCategory()">Excluir</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- HABIT MODAL -->
+    <div class="modal-overlay" id="habitModal" style="display:none;">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="habitModalTitle">Novo Hábito</h3>
+                <button class="modal-close" onclick="App.closeHabitModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <form class="modal-form" onsubmit="App.saveHabit(event)">
+                <input type="hidden" id="habitId">
+                <div class="form-group">
+                    <label class="form-label">Nome do Hábito</label>
+                    <input type="text" class="form-input" id="habitName" placeholder="Ex: Meditar 10 minutos" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Frequência</label>
+                    <select class="form-select" id="habitFrequency">
+                        <option value="daily">Diário</option>
+                        <option value="weekly">Semanal</option>
+                        <option value="monthly">Mensal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Notas</label>
+                    <textarea class="form-textarea" id="habitNotes" placeholder="Detalhes ou motivação..." rows="2"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeHabitModal()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="habitDeleteBtn" style="display:none;" onclick="App.deleteHabit()">Excluir</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTE MODAL -->
+    <div class="modal-overlay" id="noteModal" style="display:none;">
+        <div class="modal modal-large" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="noteModalTitle">Nova Nota</h3>
+                <button class="modal-close" onclick="App.closeNoteModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <form class="modal-form" onsubmit="App.saveNote(event)">
+                <input type="hidden" id="noteId">
+                <div class="form-group">
+                    <label class="form-label">Título</label>
+                    <input type="text" class="form-input" id="noteTitle" placeholder="Título da nota" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Conteúdo</label>
+                    <textarea class="form-textarea form-textarea-large" id="noteContent" placeholder="Escreva sua nota aqui..." rows="8"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeNoteModal()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="noteDeleteBtn" style="display:none;" onclick="App.deleteNote()">Excluir</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TASK VIEW MODAL -->
+    <div class="modal-overlay" id="taskViewModal" style="display:none;">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="taskViewTitle">Tarefa</h3>
+                <button class="modal-close" onclick="App.closeTaskViewModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="task-view-content" id="taskViewContent"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="App.closeTaskViewModal()">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="App.editTaskFromView()">Editar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM MODAL -->
+    <div class="modal-overlay" id="confirmModal" style="display:none;">
+        <div class="modal modal-small" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirmar</h3>
+                <button class="modal-close" onclick="App.closeConfirm()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <p class="confirm-text" id="confirmText">Tem certeza?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="App.closeConfirm()">Cancelar</button>
+                <button class="btn btn-danger" id="confirmAction" onclick="">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/modules/tasks.js"></script>
+    <script src="assets/js/modules/categories.js"></script>
+    <script src="assets/js/modules/habits.js"></script>
+    <script src="assets/js/modules/goals.js"></script>
+    <script src="assets/js/modules/notes.js"></script>
+    <script src="assets/js/modules/mensal.js"></script>
+
+    <script src="assets/js/modules/profile.js"></script>
+    <script src="assets/js/modules/themes.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
