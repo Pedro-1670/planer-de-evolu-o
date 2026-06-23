@@ -63,6 +63,28 @@ const UI = {
     return 'Boa noite';
   },
 
+  getDueStatus(dateStr) {
+    if (!dateStr) return 'none';
+    const today = this.getToday();
+    if (dateStr < today) return 'overdue';
+    const dueDate = new Date(dateStr + 'T00:00:00');
+    const todayDate = new Date(today + 'T00:00:00');
+    const diffTime = dueDate - todayDate;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays <= 3) return 'warning';
+    return 'ontrack';
+  },
+
+  getDueStatusLabel(dateStr) {
+    const status = this.getDueStatus(dateStr);
+    switch (status) {
+      case 'overdue': return '🔴 Atrasada';
+      case 'warning': return '🟡 Vence em breve';
+      case 'ontrack': return '🟢 No prazo';
+      default: return '';
+    }
+  },
+
   openModal(id) {
     document.getElementById(id).style.display = 'flex';
     document.body.style.overflow = 'hidden';

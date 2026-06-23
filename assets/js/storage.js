@@ -1,6 +1,7 @@
 const Storage = {
   KEYS: {
     TASKS: 'personalos_tasks',
+    HISTORY: 'personalos_history',
     CATEGORIES: 'personalos_categories',
     HABITS: 'personalos_habits',
     GOALS: 'personalos_goals',
@@ -25,7 +26,6 @@ const Storage = {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
       console.error('Storage set error:', e);
-      App.showToast('Erro ao salvar dados', 'error');
     }
   },
 
@@ -42,6 +42,14 @@ const Storage = {
       Object.values(this.KEYS).forEach(key => localStorage.removeItem(key));
     } catch (e) {
       console.error('Storage clear error:', e);
+    }
+  },
+  
+  clearHistory() {
+    try {
+      localStorage.removeItem(this.KEYS.HISTORY);
+    } catch (e) {
+      console.error('Storage clearHistory error:', e);
     }
   }
 };

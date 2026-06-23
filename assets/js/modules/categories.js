@@ -1,12 +1,24 @@
 const Categories = {
   getAll() {
-    return Storage.get(Storage.KEYS.CATEGORIES) || [
-      { id: 'cat_default_1', name: 'Estudos', color: '#6366f1', icon: '📚' },
-      { id: 'cat_default_2', name: 'Trabalho', color: '#3b82f6', icon: '💼' },
-      { id: 'cat_default_3', name: 'Saúde', color: '#10b981', icon: '💪' },
-      { id: 'cat_default_4', name: 'Casa', color: '#f59e0b', icon: '🏠' },
-      { id: 'cat_default_5', name: 'Finanças', color: '#8b5cf6', icon: '💰' }
-    ];
+    const stored = Storage.get(Storage.KEYS.CATEGORIES);
+    if (!stored || stored.length === 0) {
+      const defaults = [
+        { id: 'cat_default_1', name: 'Estudos', color: '#6366f1', icon: '📚' },
+        { id: 'cat_default_2', name: 'Trabalho', color: '#3b82f6', icon: '💼' },
+        { id: 'cat_default_3', name: 'Pessoal', color: '#10b981', icon: '🏠' },
+        { id: 'cat_default_4', name: 'Saúde', color: '#f59e0b', icon: '💪' },
+        { id: 'cat_default_5', name: 'Financeiro', color: '#8b5cf6', icon: '💰' },
+        { id: 'cat_default_6', name: 'Reunião / Alinhamento', color: '#06b6d4', icon: '📅' },
+        { id: 'cat_default_7', name: 'ClickUp / Rotinas Financeiras', color: '#7c3aed', icon: '🔄' },
+        { id: 'cat_default_8', name: 'Recebimentos', color: '#10b981', icon: '💴' },
+        { id: 'cat_default_9', name: 'Operacional', color: '#ca8a04', icon: '⚙️' },
+        { id: 'cat_default_10', name: 'Notas Fiscais', color: '#dc2626', icon: '📄' },
+        { id: 'cat_default_11', name: 'Cobranças / Inadimplências', color: '#dc2626', icon: '💌' },
+        { id: 'cat_default_12', name: 'Contabilidade', color: '#2563eb', icon: '🧮' }
+      ];
+      return defaults;
+    }
+    return stored;
   },
 
   saveAll(categories) {

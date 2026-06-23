@@ -2,9 +2,18 @@
 
 - [x] 1) Corrigir navegação: checar mismatch `data-page` da sidebar vs `section.page` id e vs `renderPage()`.
 - [x] 2) Corrigir hashchange: garantir que ao abrir/clicar com hash, a página correta é ativada e `renderPage()` executa.
-- [ ] 3) Revalidar atualização em tempo real do Dashboard após correção de navegação.
-
-- [ ] 4) Só depois: implementar estrutura real de categorias por período (daily/weekly/monthly) mantendo compatibilidade com dados antigos.
-- [ ] 5) Implementar progresso automático da meta do mês com base nas tarefas concluídas (sem dados estáticos) mantendo UI atual.
-- [ ] 6) Implementar primeiro acesso (Nome/Avatar) e greeting no Dashboard.
-
+- [x] 3) Implementar sistema de recorrência automática (daily, weekdays, weekly, monthly)
+- [x] 4) Implementar alertas visuais de status (🟢🟡🔴) nas tarefas
+- [x] 5) Separar tarefas Pendentes e Concluídas nas views
+- [x] 6) Adicionar data de início e campo observações no formulário de tarefas
+- [x] 7) Adicionar descrição às metas
+- [x] 8) Editar perfil (nome/avatar) nas Configurações
+- [x] 9) Tornar categoria obrigatória para tarefas
+- [x] 10) Testar navegação e renderização após mudanças
+- [x] 11) Corrigir campo de observações (taskNotes vs taskDescription) no modal de tarefas
+- [x] 12) Corrigir dueDate não sendo setado para contexto 'diario'
+- [x] 13) Reorganizar dashboard: saudação → data → métricas
+- [x] 14) Adicionar mini-cards de métricas no dashboard
+- [x] 15] Adicionar "Regra Final" e "Nova Nota" nas ações rápidas
+- [x] 16) Ordenar próximos vencimentos por prioridade e data
+- [x] 17) Exibir tarefas vinculadas na meta principal

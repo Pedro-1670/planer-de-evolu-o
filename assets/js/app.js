@@ -6,6 +6,7 @@ const App = {
   currentEditingCategoryId: null,
   currentEditingHabitId: null,
   currentEditingNoteId: null,
+  currentEditingTemplateId: null,
 
   init() {
     this.loadFocusTask();
@@ -191,9 +192,6 @@ const App = {
       el.innerHTML = `
         <div class="card-label">${title}</div>
         <div class="overview-value">${total}</div>
-        <div class="progress-bar" style="margin:10px 0 6px;">
-          <div class="progress-fill" style="width:${pct}%"></div>
-        </div>
         <span class="progress-label">${completed} concluída${completed !== 1 ? 's' : ''} • ${pct}%</span>
       `;
     };
@@ -215,14 +213,32 @@ const App = {
     const completed = allTasks.filter(t => t.completed).length;
     const overallPct = calcPct(allTasks);
 
-    setMetricCard('dashboardDailyCount', 'Tarefas diárias', dailyTotal, dailyCompleted, dailyPct);
-    setMetricCard('dashboardWeeklyCount', 'Tarefas semanais', weeklyTotal, weeklyCompleted, weeklyPct);
-    setMetricCard('dashboardMonthlyCount', 'Tarefas mensais', monthlyTotal, monthlyCompleted, monthlyPct);
-    setMetricCard('dashboardCompletedCount', 'Concluídas', `${completed}/${totalTasks}`, completed, overallPct);
+    const statsContainer = document.getElementById('dashboardStats');
+    if (statsContainer) {
+      statsContainer.innerHTML = `
+        <div class="stat-item">
+          <div class="stat-value">${dailyTotal}</div>
+          <div class="stat-label">Diário (${dailyPct}%)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">${weeklyTotal}</div>
+          <div class="stat-label">Semanal (${weeklyPct}%)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">${monthlyTotal}</div>
+          <div class="stat-label">Mensal (${monthlyPct}%)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">${completed}/${totalTasks}</div>
+          <div class="stat-label">Concluídas (${overallPct}%)</div>
+        </div>
+      `;
+    }
 
     const goalPctEl = document.getElementById('goalPercent');
     const goalProgressEl = document.getElementById('goalProgress');
     const goalTextEl = document.getElementById('goalText');
+    const goalTaskInfoEl = document.getElementById('goalTaskInfo');
 
     const currentMonth = new Date().toISOString().substring(0, 7);
     const mainGoal = Goals.getAll().find(g => (g.month || currentMonth) === currentMonth);
@@ -237,6 +253,19 @@ const App = {
         goalTextEl.textContent = `${mainGoal.title}${deadline}`;
       } else {
         goalTextEl.textContent = `Mensal: ${monthlyPct}% concluído`;
+      }
+    }
+    if (goalTaskInfoEl) {
+      if (mainGoal && mainGoal.taskIds && mainGoal.taskIds.length > 0) {
+        const linkedTasks = allTasks.filter(t => mainGoal.taskIds.includes(t.id));
+        const completedLinked = linkedTasks.filter(t => t.completed).length;
+        goalTaskInfoEl.innerHTML = `
+          <div class="goal-task-count" style="color:var(--text-muted);">
+            ${completedLinked}/${mainGoal.taskIds.length} tarefas vinculadas concluídas
+          </div>
+        `;
+      } else {
+        goalTaskInfoEl.innerHTML = '';
       }
     }
 
@@ -304,7 +333,13 @@ const App = {
 
     const upcoming = pendingTasks
       .filter(t => t.dueDate)
-      .sort((a,b) => a.dueDate.localeCompare(b.dueDate))
+      .sort((a, b) => {
+        const priorityOrder = { 'alta': 0, 'media': 1, 'baixa': 2 };
+        const aPrio = priorityOrder[a.priority] ?? 1;
+        const bPrio = priorityOrder[b.priority] ?? 1;
+        if (aPrio !== bPrio) return aPrio - bPrio;
+        return a.dueDate.localeCompare(b.dueDate);
+      })
       .slice(0, 5);
 
     const nextEl = document.getElementById('dashboardNextTasks');
@@ -484,7 +519,10 @@ const App = {
       }
       document.getElementById('taskPriority').value = task.priority || 'media';
       document.getElementById('taskDueDate').value = task.dueDate || '';
-      document.getElementById('taskDescription').value = task.description || '';
+      const taskNotesEl = document.getElementById('taskNotes');
+      const taskDescriptionEl = document.getElementById('taskDescription');
+      if (taskNotesEl) taskNotesEl.value = task.notes || task.description || '';
+      if (taskDescriptionEl) taskDescriptionEl.value = task.notes || task.description || '';
       document.getElementById('taskDeleteBtn').style.display = 'flex';
     } else {
       document.getElementById('taskModalTitle').textContent = 'Nova Tarefa';
@@ -492,8 +530,12 @@ const App = {
       document.getElementById('taskTitle').value = '';
       document.getElementById('taskCategory').value = '';
       document.getElementById('taskPriority').value = 'media';
-      document.getElementById('taskDueDate').value = context === 'hoje' ? UI.getToday() : '';
-      document.getElementById('taskDescription').value = '';
+      const isDiario = context === 'diario' || context === 'hoje';
+      document.getElementById('taskDueDate').value = isDiario ? UI.getToday() : '';
+      const taskNotesEl = document.getElementById('taskNotes');
+      const taskDescriptionEl = document.getElementById('taskDescription');
+      if (taskNotesEl) taskNotesEl.value = '';
+      if (taskDescriptionEl) taskDescriptionEl.value = '';
       document.getElementById('taskDeleteBtn').style.display = 'none';
     }
 
@@ -509,7 +551,11 @@ const App = {
   saveTask(e) {
     e.preventDefault();
     const taskDueDateEl = document.getElementById('taskDueDate');
+    const taskStartDateEl = document.getElementById('taskStartDate');
     const taskCategoryId = document.getElementById('taskCategory').value || null;
+    const taskNotesEl = document.getElementById('taskNotes');
+    const taskDescriptionEl = document.getElementById('taskDescription');
+    const taskRecurrenceEl = document.getElementById('taskRecurrence');
     const category = taskCategoryId ? (Categories.getById(taskCategoryId)?.name || '') : '';
     const scope = this.currentTaskModalScope || 'diario';
     const scopeToPeriod = (value) => {
@@ -518,6 +564,7 @@ const App = {
       if (normalized === 'mensal' || normalized === 'monthly') return 'monthly';
       return 'daily';
     };
+    const notesOrDesc = (taskNotesEl?.value || taskDescriptionEl?.value || '').trim();
     const data = {
       title: document.getElementById('taskTitle').value.trim(),
       categoryId: taskCategoryId,
@@ -525,7 +572,10 @@ const App = {
       period: scopeToPeriod(scope),
       priority: document.getElementById('taskPriority').value,
       dueDate: taskDueDateEl ? taskDueDateEl.value : null,
-      description: document.getElementById('taskDescription').value.trim(),
+      startDate: taskStartDateEl ? taskStartDateEl.value : null,
+      recurrence: taskRecurrenceEl ? taskRecurrenceEl.value : 'once',
+      notes: notesOrDesc,
+      description: notesOrDesc,
       scope
     };
 
@@ -951,6 +1001,77 @@ const App = {
     }
   },
 
+  // TEMPLATE CRUD
+  openTemplateModal(templateId = null) {
+    this.currentEditingTemplateId = templateId;
+    if (templateId) {
+      const tpl = Templates.getById(templateId);
+      document.getElementById('templateModalTitle').textContent = 'Editar Template';
+      document.getElementById('templateId').value = tpl.id;
+      document.getElementById('templateName').value = tpl.name;
+      document.getElementById('templateDescription').value = tpl.description || '';
+      document.getElementById('templateTasks').value = tpl.tasks ? tpl.tasks.join('\n') : '';
+      document.getElementById('templateDeleteBtn').style.display = 'flex';
+    } else {
+      document.getElementById('templateModalTitle').textContent = 'Novo Template';
+      document.getElementById('templateId').value = '';
+      document.getElementById('templateName').value = '';
+      document.getElementById('templateDescription').value = '';
+      document.getElementById('templateTasks').value = '';
+      document.getElementById('templateDeleteBtn').style.display = 'none';
+    }
+    UI.openModal('templateModal');
+    setTimeout(() => document.getElementById('templateName').focus(), 100);
+  },
+
+  closeTemplateModal() {
+    UI.closeModal('templateModal');
+    this.currentEditingTemplateId = null;
+  },
+
+  saveTemplate(e) {
+    e.preventDefault();
+    const tasksStr = document.getElementById('templateTasks').value;
+    const data = {
+      name: document.getElementById('templateName').value.trim(),
+      description: document.getElementById('templateDescription').value.trim(),
+      tasks: tasksStr
+    };
+
+    if (!data.name) return;
+
+    if (this.currentEditingTemplateId) {
+      Templates.update(this.currentEditingTemplateId, data);
+      this.showToast('Template atualizado', 'success');
+    } else {
+      Templates.create(data);
+      this.showToast('Template criado', 'success');
+    }
+
+    this.closeTemplateModal();
+    this.refreshCurrentPage();
+  },
+
+  confirmDeleteTemplate(id) {
+    document.getElementById('confirmText').textContent = 'Tem certeza que deseja excluir este template?';
+    document.getElementById('confirmAction').onclick = () => {
+      Templates.delete(id);
+      this.closeConfirm();
+      this.refreshCurrentPage();
+      this.showToast('Template excluído', 'success');
+    };
+    UI.openModal('confirmModal');
+  },
+
+  deleteTemplate() {
+    if (this.currentEditingTemplateId) {
+      Templates.delete(this.currentEditingTemplateId);
+      this.closeTemplateModal();
+      this.refreshCurrentPage();
+      this.showToast('Template excluído', 'success');
+    }
+  },
+
   // CONFIRM
   closeConfirm() {
     UI.closeModal('confirmModal');
@@ -993,3 +1114,5 @@ const App = {
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
 });
+
+window.App = App;

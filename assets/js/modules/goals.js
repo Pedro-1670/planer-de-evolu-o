@@ -11,6 +11,23 @@ const Goals = {
     return this.getAll().find(g => g.id === id);
   },
 
+  getGoalProgress(goalId) {
+    const goal = this.getById(goalId);
+    if (!goal) return 0;
+    
+    const linkedTaskIds = goal.taskIds || [];
+    if (linkedTaskIds.length === 0) {
+      return goal.progress || 0;
+    }
+    
+    const tasks = Tasks.getAll().map(t => Tasks.normalizeTask(t));
+    const linkedTasks = tasks.filter(t => linkedTaskIds.includes(t.id));
+    const total = linkedTasks.length;
+    if (total === 0) return goal.progress || 0;
+    const completed = linkedTasks.filter(t => t.completed).length;
+    return Math.round((completed / total) * 100);
+  },
+
   getMonthlyProgress(categoryId) {
     const currentMonth = new Date().toISOString().substring(0, 7);
     const tasks = Tasks.getAll().map(t => Tasks.normalizeTask(t));
@@ -37,9 +54,11 @@ const Goals = {
     const newGoal = {
       id: 'goal_' + Date.now(),
       title: data.title,
+      description: data.description || '',
       progress: parseInt(data.progress) || 0,
       month: data.month || new Date().toISOString().substring(0, 7),
       deadline: data.deadline || '',
+      taskIds: data.taskIds || [],
       createdAt: new Date().toISOString()
     };
     goals.unshift(newGoal);
@@ -79,12 +98,14 @@ const Goals = {
     container.innerHTML = goals.map(goal => {
       const monthLabel = goal.month ? new Date(goal.month + '-01').toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : '';
       const isCurrentMonth = goal.month === currentMonth;
-      const progress = isCurrentMonth ? this.getMonthlyProgress() : (goal.progress || 0);
+      const progress = this.getGoalProgress(goal.id);
       const deadline = goal.deadline ? ` • Prazo: ${UI.formatShortDate(goal.deadline)}` : '';
+      const taskCount = goal.taskIds ? goal.taskIds.length : 0;
       return `
         <div class="goal-card">
           <div class="goal-card-title">${UI.escapeHtml(goal.title)}</div>
-          <div class="goal-card-month">${isCurrentMonth ? 'Este mês' : monthLabel}${deadline}</div>
+          ${goal.description ? `<div class="goal-card-desc">${UI.escapeHtml(goal.description)}</div>` : ''}
+          <div class="goal-card-month">${isCurrentMonth ? 'Este mês' : monthLabel}${deadline} • ${taskCount} tarefa${taskCount !== 1 ? 's' : ''}</div>
           <div class="progress-bar">
             <div class="progress-fill" style="width: ${progress}%"></div>
           </div>

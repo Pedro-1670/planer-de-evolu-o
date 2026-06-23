@@ -52,6 +52,23 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 <span class="nav-label">Anotações</span>
             </a>
+            <a href="#categorias" class="nav-item" data-page="categorias">
+
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span class="nav-label">Categorias</span>
+            </a>
+            <a href="#habitos" class="nav-item" data-page="habitos">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span class="nav-label">Hábitos</span>
+            </a>
+            <a href="#templates" class="nav-item" data-page="templates">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span class="nav-label">Templates</span>
+            </a>
+            <a href="#historico" class="nav-item" data-page="historico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span class="nav-label">Histórico</span>
+            </a>
             <a href="#configuracoes" class="nav-item" data-page="configuracoes">
 
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -69,67 +86,106 @@
         </div>
     </aside>
 
-    <main class="main-content">
+<main class="main-content">
         <!-- DASHBOARD -->
         <section class="page active" id="page-dashboard">
             <div class="dashboard-header">
                 <h1 class="greeting" id="greeting">Bom dia</h1>
                 <p class="date-display" id="dateDisplay"></p>
+                <div class="dashboard-stats" id="dashboardStats"></div>
             </div>
             <div class="page-actions">
                 <button class="btn btn-primary" onclick="App.openTaskModal('diario')">
-
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     Nova Tarefa
                 </button>
             </div>
-            <div class="dashboard-grid">
-                <div class="dashboard-card focus-card">
-                    <div class="card-label">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
-                        Foco do Dia
-                    </div>
-                    <p class="focus-text" id="focusTask">Nenhuma tarefa definida como foco</p>
-                    <button class="btn-text" onclick="App.setFocusTask()">Definir foco</button>
-                </div>
-                <div class="dashboard-card goal-card">
-                    <div class="card-label">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                        Meta do Mês
-                    </div>
-                    <p class="goal-text" id="goalText">Nenhuma meta definida</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="goalProgress" style="width: 0%"></div>
-                    </div>
-                    <span class="progress-label" id="goalPercent">0%</span>
-                </div>
-            </div>
+<div class="dashboard-grid">
+                 <div class="dashboard-card focus-card">
+                     <div class="card-label">
+                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                         Prioridade do Dia
+                     </div>
+                     <p class="focus-text" id="focusTask">Nenhuma tarefa definida como foco</p>
+                     <div class="focus-meta" id="focusMeta" style="display:none;">
+                         <div class="focus-info-row">
+                             <span id="focusCategory"></span>
+                             <span id="focusDeadline"></span>
+                             <span class="focus-status" id="focusStatus"></span>
+                         </div>
+                     </div>
+                      <button class="btn-text focus-action-btn" onclick="App.setFocusTask()">Definir foco</button>
+                 </div>
+                 <div class="dashboard-card goal-card">
+                      <div class="card-label">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                          Meta Principal
+                      </div>
+                      <p class="goal-text" id="goalText">Nenhuma meta definida</p>
+                      <div class="goal-task-info" id="goalTaskInfo"></div>
+                      <span class="goal-deadline" id="goalDeadline"></span>
+                      <div class="goal-progress-wrapper">
+                          <div class="progress-bar">
+                              <div class="progress-fill" id="goalProgress" style="width: 0%"></div>
+                          </div>
+                          <span class="progress-label" id="goalPercent">0%</span>
+                      </div>
+                 </div>
+                 <div class="dashboard-card" style="grid-column: 1/-1;">
+                        <div class="card-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                            Ações Rápidas
+                        </div>
+                     <div class="quick-actions-grid">
+                         <button class="btn btn-primary quick-action-btn" onclick="App.openTaskModal('diario')">
+                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                             Nova Tarefa Diária
+                         </button>
+                         <button class="btn btn-primary quick-action-btn" onclick="App.openTaskModal('semana')">
+                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y2="2" x2="16" y2="6"></line><line x1="8" y2="2" x2="8" y2="6"></line><line x1="3" y2="10" x2="21" y2="10"></line></svg>
+                             Nova Tarefa Semanal
+                         </button>
+                         <button class="btn btn-primary quick-action-btn" onclick="App.openTaskModal('mensal')">
+                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y2="10" x2="21" y2="10"></line><line x1="8" y2="2" x2="8" y2="6"></line><line x1="16" y2="2" x2="16" y2="6"></line></svg>
+                             Nova Tarefa Mensal
+                         </button>
+                         <button class="btn btn-primary quick-action-btn" onclick="App.openGoalModal()">
+                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                             Nova Meta
+                         </button>
+<button class="btn btn-primary quick-action-btn" onclick="App.openNoteModal()">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y2="13" x2="8" y2="13"></line><line x1="16" y2="17" x2="8" y2="17"></line></svg>
+                              Nova Nota
+                          </button>
+                          <button class="btn btn-primary quick-action-btn" onclick="App.openTemplateModal()">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                              Regra Final
+                          </button>
+                      </div>
+                 </div>
+             </div>
             <div class="task-section">
                 <h2 class="section-title">Acompanhamento</h2>
                 <div class="dashboard-overview" aria-label="Resumo do sistema">
                     <div class="overview-grid">
                         <div class="overview-card">
-                            <div class="card-label">Tarefas diárias</div>
+                            <div class="card-label">Diário</div>
                             <div class="overview-value" id="dashboardDailyCount">0</div>
                         </div>
                         <div class="overview-card">
-                            <div class="card-label">Tarefas semanais</div>
+                            <div class="card-label">Semanal</div>
                             <div class="overview-value" id="dashboardWeeklyCount">0</div>
                         </div>
                         <div class="overview-card">
-                            <div class="card-label">Tarefas mensais</div>
+                            <div class="card-label">Mensal</div>
                             <div class="overview-value" id="dashboardMonthlyCount">0</div>
-                        </div>
-                        <div class="overview-card">
-                            <div class="card-label">Concluídas</div>
-                            <div class="overview-value" id="dashboardCompletedCount">0</div>
                         </div>
                         <div class="overview-card" style="grid-column: 1/-1;">
                             <div class="card-label">Categorias mais utilizadas</div>
                             <div class="category-most-used" id="dashboardTopCategories"></div>
                         </div>
                         <div class="overview-card" style="grid-column: 1/-1;">
-                            <div class="card-label">Próximas tarefas importantes</div>
+                            <div class="card-label">Próximos Vencimentos</div>
                             <div class="next-tasks" id="dashboardNextTasks"></div>
                         </div>
                         <div class="overview-card" style="grid-column: 1/-1;">
@@ -253,6 +309,36 @@
             <div class="notes-grid" id="notesGrid"></div>
         </section>
 
+        <!-- HISTÓRICO -->
+        <section class="page" id="page-historico">
+            <div class="page-header">
+                <h1>Histórico</h1>
+                <p class="page-subtitle">Tarefas concluídas</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-secondary" onclick="App.restoreAllCompleted()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                    Restaurar Todas
+                </button>
+            </div>
+            <div class="task-list" id="historyTasks"></div>
+        </section>
+
+        <!-- TEMPLATES -->
+        <section class="page" id="page-templates">
+            <div class="page-header">
+                <h1>Templates de Rotina</h1>
+                <p class="page-subtitle">Modelos prontos para usar</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" onclick="App.openTemplateModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Novo Template
+                </button>
+            </div>
+            <div class="templates-grid" id="templatesGrid"></div>
+        </section>
+
         <!-- CONFIGURAÇÕES -->
         <section class="page" id="page-configuracoes">
 
@@ -263,6 +349,15 @@
             <div class="settings-section">
                 <h2 class="settings-title">Aparência</h2>
                 <div class="theme-grid" id="themeGrid"></div>
+            </div>
+            <div class="settings-section">
+                <h2 class="settings-title">Perfil</h2>
+                <div class="settings-actions">
+                    <button class="btn btn-primary" onclick="App.editProfile()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Editar Perfil
+                    </button>
+                </div>
             </div>
             <div class="settings-section">
                 <h2 class="settings-title">Dados</h2>
@@ -313,9 +408,25 @@
                     <label class="form-label">Data de Vencimento</label>
                     <input type="date" class="form-input" id="taskDueDate">
                 </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Data de Início</label>
+                        <input type="date" class="form-input" id="taskStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Repetição</label>
+                        <select class="form-select" id="taskRecurrence">
+                            <option value="once">Apenas uma vez</option>
+                            <option value="daily">Todos os dias</option>
+                            <option value="weekdays">Segunda a Sexta</option>
+                            <option value="weekly">Semanal</option>
+                            <option value="monthly">Mensal</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label class="form-label">Descrição</label>
-                    <textarea class="form-textarea" id="taskDescription" placeholder="Detalhes adicionais..." rows="3"></textarea>
+                    <label class="form-label">Observações</label>
+                    <textarea class="form-textarea" id="taskNotes" placeholder="Detalhes adicionais..." rows="2"></textarea>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="App.closeTaskModal()">Cancelar</button>
@@ -340,6 +451,10 @@
                 <div class="form-group">
                     <label class="form-label">Título da Meta</label>
                     <input type="text" class="form-input" id="goalTitle" placeholder="Ex: Ler 12 livros este ano" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-textarea" id="goalDescription" placeholder="Detalhes da meta..." rows="2"></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -401,6 +516,13 @@
                         <option value="💪">💪 Saúde</option>
                         <option value="🏠">🏠 Casa</option>
                         <option value="💰">💰 Finanças</option>
+                        <option value="📅">📅 Reunião</option>
+                        <option value="🔄">🔄 Rotinas</option>
+                        <option value="💴">💴 Recebimentos</option>
+                        <option value="⚙️">⚙️ Operacional</option>
+                        <option value="📄">📄 Notas Fiscais</option>
+                        <option value="💌">💌 Cobranças</option>
+                        <option value="🧮">🧮 Contabilidade</option>
                         <option value="🎯">🎯 Metas</option>
                         <option value="✈️">✈️ Viagem</option>
                         <option value="🎨">🎨 Criativo</option>
@@ -410,6 +532,38 @@
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" onclick="App.closeCategoryModal()">Cancelar</button>
                     <button type="button" class="btn btn-danger" id="categoryDeleteBtn" style="display:none;" onclick="App.deleteCategory()">Excluir</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TEMPLATE MODAL -->
+    <div class="modal-overlay" id="templateModal" style="display:none;">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="templateModalTitle">Novo Template</h3>
+                <button class="modal-close" onclick="App.closeTemplateModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <form class="modal-form" onsubmit="App.saveTemplate(event)">
+                <input type="hidden" id="templateId">
+                <div class="form-group">
+                    <label class="form-label">Nome do Template</label>
+                    <input type="text" class="form-input" id="templateName" placeholder="Ex: Rotina Financeira" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-textarea" id="templateDescription" placeholder="Descreva este template..." rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tarefas (uma por linha)</label>
+                    <textarea class="form-textarea form-textarea-large" id="templateTasks" placeholder="Conferir recebimentos&#10;Emitir notas fiscais&#10;Verificar inadimplência" rows="6"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="App.closeTemplateModal()">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="templateDeleteBtn" style="display:none;" onclick="App.deleteTemplate()">Excluir</button>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
@@ -480,19 +634,38 @@
         </div>
     </div>
 
-    <!-- TASK VIEW MODAL -->
+<!-- TASK VIEW MODAL -->
     <div class="modal-overlay" id="taskViewModal" style="display:none;">
         <div class="modal" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h3 id="taskViewTitle">Tarefa</h3>
                 <button class="modal-close" onclick="App.closeTaskViewModal()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x="18" y="6" x="6" y="18"></line><line x="6" y="6" x="18" y="18"></line></svg>
                 </button>
             </div>
             <div class="task-view-content" id="taskViewContent"></div>
+             <input type="hidden" id="taskViewId">
             <div class="modal-actions">
                 <button type="button" class="btn btn-secondary" onclick="App.closeTaskViewModal()">Fechar</button>
                 <button type="button" class="btn btn-primary" onclick="App.editTaskFromView()">Editar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTE VIEW MODAL -->
+    <div class="modal-overlay" id="noteViewModal" style="display:none;">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="noteViewTitle">Nota</h3>
+                <button class="modal-close" onclick="App.closeNoteViewModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x="18" y="6" x="6" y="18"></line><line x="6" y="6" x="18" y="18"></line></svg>
+                </button>
+            </div>
+            <div class="task-view-content" id="noteViewContent" style="padding:1.5rem;"></div>
+             <input type="hidden" id="noteViewId">
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="App.closeNoteViewModal()">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="App.editNoteFromView()">Editar</button>
             </div>
         </div>
     </div>
@@ -521,15 +694,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <script src="assets/js/storage.js"></script>
     <script src="assets/js/ui.js"></script>
+    <script src="assets/js/app.js"></script>
     <script src="assets/js/modules/tasks.js"></script>
     <script src="assets/js/modules/categories.js"></script>
     <script src="assets/js/modules/habits.js"></script>
     <script src="assets/js/modules/goals.js"></script>
     <script src="assets/js/modules/notes.js"></script>
     <script src="assets/js/modules/mensal.js"></script>
-
+    <script src="assets/js/modules/templates.js"></script>
     <script src="assets/js/modules/profile.js"></script>
     <script src="assets/js/modules/themes.js"></script>
-    <script src="assets/js/app.js"></script>
 </body>
 </html>
