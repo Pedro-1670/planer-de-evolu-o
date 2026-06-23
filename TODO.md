@@ -18,3 +18,5 @@
 - [x] 16) Ordenar próximos vencimentos por prioridade e data
 - [x] 17) Exibir tarefas vinculadas na meta principal
 - [x] 18) Adicionar funções de template CRUD (openTemplateModal, saveTemplate, deleteTemplate)
+- [x] 19) Corrigir isolamento de períodos (diario, semana, mensal)
+- [x] 20) Garantir recorrência preservation do period original
