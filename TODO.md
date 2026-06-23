@@ -17,3 +17,4 @@
 - [x] 15] Adicionar "Regra Final" e "Nova Nota" nas ações rápidas
 - [x] 16) Ordenar próximos vencimentos por prioridade e data
 - [x] 17) Exibir tarefas vinculadas na meta principal
+- [x] 18) Adicionar funções de template CRUD (openTemplateModal, saveTemplate, deleteTemplate)
