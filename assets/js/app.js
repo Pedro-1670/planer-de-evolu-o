@@ -178,8 +178,7 @@ const App = {
     const taskMatchesPeriod = (task, period) => {
       const normalized = Tasks.normalizeTask(task);
       const taskPeriod = String(normalized.period || scopeToPeriod(normalized.scope)).toLowerCase();
-      const taskScope = String(normalized.scope || periodToScope(normalized.period)).toLowerCase();
-      return taskPeriod === period || taskScope === period;
+      return taskPeriod === period;
     };
     const calcPct = (items) => {
       const total = items.length;

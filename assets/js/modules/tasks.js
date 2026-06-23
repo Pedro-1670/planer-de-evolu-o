@@ -263,7 +263,12 @@ const Tasks = {
 
     let tasks = this.getFiltered();
     if (scope) {
-      tasks = tasks.filter(t => this.normalizeTask(t).scope === scope);
+      const expectedScope = this.periodToScope(scope);
+      const expectedPeriod = this.scopeToPeriod(scope);
+      tasks = tasks.filter(t => {
+        const normalized = this.normalizeTask(t);
+        return normalized.scope === expectedScope || normalized.period === expectedPeriod;
+      });
     }
 
     const pendingTasks = tasks.filter(t => !t.completed);
