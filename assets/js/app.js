@@ -162,6 +162,36 @@ const App = {
     const focusTask = document.getElementById('focusTask');
     if (focusTask) focusTask.textContent = task ? task.title : 'Nenhuma tarefa definida como foco';
 
+    if (task) {
+      const focusCategory = document.getElementById('focusCategory');
+      const focusDeadline = document.getElementById('focusDeadline');
+      const focusStatus = document.getElementById('focusStatus');
+      const focusMeta = document.getElementById('focusMeta');
+      
+      if (focusCategory) {
+        const categories = Categories.getAll();
+        const cat = categories.find(c => c.id === task.categoryId);
+        focusCategory.textContent = cat ? `${cat.icon} ${cat.name}` : (task.category || 'Sem categoria');
+        focusCategory.style.color = cat ? cat.color : 'var(--text-secondary)';
+      }
+      if (focusDeadline) focusDeadline.textContent = task.dueDate ? UI.formatShortDate(task.dueDate) : '';
+      if (focusStatus) {
+        focusStatus.textContent = task.status || 'A iniciar';
+        focusStatus.className = 'focus-status';
+        if (task.status === 'Concluída') {
+          focusStatus.classList.add('completed');
+        } else if (task.status === 'Atrasada') {
+          focusStatus.classList.add('overdue');
+        } else {
+          focusStatus.classList.add('pending');
+        }
+      }
+      if (focusMeta) focusMeta.style.display = 'flex';
+    } else {
+      const focusMeta = document.getElementById('focusMeta');
+      if (focusMeta) focusMeta.style.display = 'none';
+    }
+
     const allTasks = Tasks.getAll().map(t => Tasks.normalizeTask(t));
     const scopeToPeriod = (scope) => {
       const value = String(scope || 'diario').toLowerCase();
@@ -517,11 +547,13 @@ const App = {
         document.getElementById('taskCategory').value = categoryByName ? categoryByName.id : '';
       }
       document.getElementById('taskPriority').value = task.priority || 'media';
+      document.getElementById('taskStatus').value = task.status || 'A iniciar';
       document.getElementById('taskDueDate').value = task.dueDate || '';
       const taskNotesEl = document.getElementById('taskNotes');
       const taskDescriptionEl = document.getElementById('taskDescription');
       if (taskNotesEl) taskNotesEl.value = task.notes || task.description || '';
       if (taskDescriptionEl) taskDescriptionEl.value = task.notes || task.description || '';
+      document.getElementById('taskRecurrence').value = task.recurrence || 'once';
       document.getElementById('taskDeleteBtn').style.display = 'flex';
     } else {
       document.getElementById('taskModalTitle').textContent = 'Nova Tarefa';
@@ -529,6 +561,7 @@ const App = {
       document.getElementById('taskTitle').value = '';
       document.getElementById('taskCategory').value = '';
       document.getElementById('taskPriority').value = 'media';
+      document.getElementById('taskStatus').value = 'A iniciar';
       const isDiario = context === 'diario' || context === 'hoje';
       document.getElementById('taskDueDate').value = isDiario ? UI.getToday() : '';
       const taskNotesEl = document.getElementById('taskNotes');
@@ -552,6 +585,7 @@ const App = {
     const taskDueDateEl = document.getElementById('taskDueDate');
     const taskStartDateEl = document.getElementById('taskStartDate');
     const taskCategoryId = document.getElementById('taskCategory').value || null;
+    const taskStatusEl = document.getElementById('taskStatus');
     const taskNotesEl = document.getElementById('taskNotes');
     const taskDescriptionEl = document.getElementById('taskDescription');
     const taskRecurrenceEl = document.getElementById('taskRecurrence');
@@ -568,6 +602,7 @@ const App = {
       title: document.getElementById('taskTitle').value.trim(),
       categoryId: taskCategoryId,
       category,
+      status: taskStatusEl ? taskStatusEl.value : 'A iniciar',
       period: scopeToPeriod(scope),
       priority: document.getElementById('taskPriority').value,
       dueDate: taskDueDateEl ? taskDueDateEl.value : null,
@@ -653,6 +688,7 @@ const App = {
       <div class="task-view-meta">
         ${category ? `<span class="task-category" style="background:${category.color}20; color:${category.color}">${category.icon} ${UI.escapeHtml(category.name)}</span>` : ''}
         ${task.priority ? `<span class="task-priority ${task.priority}">${task.priority}</span>` : ''}
+        ${task.status ? `<span class="task-priority">${UI.escapeHtml(task.status)}</span>` : ''}
         ${task.dueDate ? `<span class="task-due ${UI.isOverdue(task.dueDate) && !task.completed ? 'overdue' : ''}">${UI.formatDate(task.dueDate)}</span>` : ''}
         <span class="task-due">${task.completed ? 'Concluída' : 'Pendente'}</span>
       </div>
@@ -806,7 +842,9 @@ const App = {
   },
 
   filterByCategory(categoryId) {
-    this.navigateTo('dashboard');
+    this.navigateTo('diario');
+    Tasks.currentCategory = categoryId;
+    Tasks.render('todayTasks', 'all', categoryId);
     this.showToast('Filtrando por categoria', 'info');
   },
 

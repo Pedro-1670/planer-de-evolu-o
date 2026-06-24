@@ -437,6 +437,7 @@ const Tasks = {
       title: data.title,
       categoryId,
       category,
+      status: data.status || 'A iniciar',
       notes: data.notes || data.description || '',
       description: data.notes || data.description || '',
       priority: data.priority || 'media',
