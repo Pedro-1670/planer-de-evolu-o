@@ -2,14 +2,6 @@
   "version": 2,
   "routes": [
     {
-      "src": "/assets/css/(.*)",
-      "dest": "/assets/css/$1"
-    },
-    {
-      "src": "/assets/js/(.*)",
-      "dest": "/assets/js/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
