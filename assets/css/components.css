@@ -1338,3 +1338,15 @@
 }
 
 /* Overview cards */
+
+/* History selection */
+.history-item {
+  transition: background 0.15s;
+}
+.history-item:hover {
+  background: var(--bg-hover, rgba(0,0,0,0.04));
+}
+.history-selected {
+  background: var(--primary-alpha, rgba(99,102,241,0.08)) !important;
+  border-color: var(--primary) !important;
+}

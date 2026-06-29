@@ -1,4 +1,4 @@
- const App = {
+const App = {
   focusTaskId: null,
   selectedColor: '#6366f1',
   currentEditingTaskId: null,
@@ -656,7 +656,11 @@
     this.refreshCurrentPage();
     const tasks = Tasks.getAll();
     const task = tasks.find(t => t.id === id);
-    this.showToast(task.completed ? 'Tarefa concluída!' : 'Tarefa reaberta', task.completed ? 'success' : 'info');
+    if (task) {
+      this.showToast(task.completed ? 'Tarefa concluída!' : 'Tarefa reaberta', task.completed ? 'success' : 'info');
+    } else {
+      this.showToast('Tarefa concluída!', 'success');
+    }
   },
 
 
@@ -1122,6 +1126,8 @@
     const history = Tasks.getHistory();
 
     if (!history || history.length === 0) {
+      const btn = document.getElementById('btnRestoreSelected');
+      if (btn) btn.style.display = 'none';
       container.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">
@@ -1144,12 +1150,14 @@
         : '';
       const scope = scopeLabel[task.scope] || task.scope || 'Diário';
       return `
-        <div class="task-item" style="opacity:0.75;">
-          <div class="task-check completed">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <div class="history-item" data-id="${task.id}"
+             style="cursor:pointer;padding:0.75rem 1rem;border:1px solid var(--border);border-radius:8px;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.75rem;background:var(--bg-card);"
+             onclick="event.stopPropagation(); App.toggleHistorySelect(this)">
+          <div class="history-checkbox"
+               style="width:20px;height:20px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;">
           </div>
           <div class="task-content">
-            <span class="task-title" style="text-decoration:line-through;">${UI.escapeHtml(task.title)}</span>
+            <span class="task-title" style="text-decoration:line-through;opacity:0.7;">${UI.escapeHtml(task.title)}</span>
             <div class="task-meta" style="margin-top:2px;font-size:0.75rem;color:var(--text-muted);">
               ${dateStr ? '✓ ' + dateStr : ''} ${scope ? '· ' + scope : ''}
               ${task.category ? '· ' + UI.escapeHtml(task.category) : ''}
@@ -1157,6 +1165,40 @@
           </div>
         </div>`;
     }).join('');
+  },
+
+  toggleHistorySelect(el) {
+    const checkbox = el.querySelector('.history-checkbox');
+    const isSelected = el.classList.toggle('history-selected');
+    if (isSelected) {
+      checkbox.style.background = 'var(--primary)';
+      checkbox.style.borderColor = 'var(--primary)';
+      checkbox.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    } else {
+      checkbox.style.background = '';
+      checkbox.style.borderColor = 'var(--border)';
+      checkbox.innerHTML = '';
+    }
+    const anySelected = document.querySelectorAll('.history-selected').length > 0;
+    const btn = document.getElementById('btnRestoreSelected');
+    if (btn) btn.style.display = anySelected ? 'flex' : 'none';
+  },
+
+  restoreSelected() {
+    const selected = document.querySelectorAll('.history-selected');
+    if (selected.length === 0) return;
+    const ids = [...selected].map(el => el.dataset.id);
+    const history = Tasks.getHistory();
+    const toRestore = history.filter(t => ids.includes(t.id));
+    const remaining = history.filter(t => !ids.includes(t.id));
+    const tasks = Tasks.getAllRaw();
+    toRestore.forEach(task => {
+      tasks.unshift({ ...task, completed: false, completedAt: null, updatedAt: new Date().toISOString() });
+    });
+    Storage.set(Storage.KEYS.TASKS, tasks);
+    Storage.set(Storage.KEYS.HISTORY, remaining);
+    this.renderHistory();
+    this.showToast(toRestore.length + ' tarefa(s) restaurada(s)', 'success');
   },
 
   restoreAllCompleted() {
