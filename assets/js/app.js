@@ -1,4 +1,4 @@
-const App = {
+ const App = {
   focusTaskId: null,
   selectedColor: '#6366f1',
   currentEditingTaskId: null,
@@ -121,6 +121,12 @@ const App = {
       case 'configuracoes':
         Themes.render();
         break;
+      case 'templates':
+        Templates.render();
+        break;
+      case 'historico':
+        this.renderHistory();
+        break;
     }
   },
 
@@ -128,7 +134,7 @@ const App = {
     const hash = (window.location.hash || '').replace('#', '').trim();
     if (!hash) return;
 
-    const validPages = ['dashboard','diario','semana','mensal','metas','notas','configuracoes','categorias','habitos'];
+    const validPages = ['dashboard','diario','semana','mensal','metas','notas','configuracoes','categorias','habitos','templates','historico'];
     const page = validPages.includes(hash) ? hash : null;
     if (!page) return;
 
@@ -1107,6 +1113,66 @@ const App = {
       this.refreshCurrentPage();
       this.showToast('Template excluído', 'success');
     }
+  },
+
+  // HISTÓRICO
+  renderHistory() {
+    const container = document.getElementById('historyTasks');
+    if (!container) return;
+    const history = Tasks.getHistory();
+
+    if (!history || history.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path></svg>
+          </div>
+          <p class="empty-title">Nenhuma tarefa no histórico</p>
+          <p class="empty-text">Tarefas concluídas aparecerão aqui</p>
+        </div>`;
+      return;
+    }
+
+    const sorted = [...history].sort((a, b) =>
+      (b.completedAt || '').localeCompare(a.completedAt || ''));
+
+    const scopeLabel = { diario: 'Diário', semanal: 'Semanal', mensal: 'Mensal' };
+
+    container.innerHTML = sorted.map(task => {
+      const dateStr = task.completedAt
+        ? new Date(task.completedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+        : '';
+      const scope = scopeLabel[task.scope] || task.scope || 'Diário';
+      return `
+        <div class="task-item" style="opacity:0.75;">
+          <div class="task-check completed">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="task-content">
+            <span class="task-title" style="text-decoration:line-through;">${UI.escapeHtml(task.title)}</span>
+            <div class="task-meta" style="margin-top:2px;font-size:0.75rem;color:var(--text-muted);">
+              ${dateStr ? '✓ ' + dateStr : ''} ${scope ? '· ' + scope : ''}
+              ${task.category ? '· ' + UI.escapeHtml(task.category) : ''}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  },
+
+  restoreAllCompleted() {
+    const history = Tasks.getHistory();
+    if (!history || history.length === 0) {
+      this.showToast('Nenhuma tarefa para restaurar', 'info');
+      return;
+    }
+    const tasks = Tasks.getAllRaw();
+    history.forEach(task => {
+      tasks.unshift({ ...task, completed: false, completedAt: null, updatedAt: new Date().toISOString() });
+    });
+    Storage.set(Storage.KEYS.TASKS, tasks);
+    Storage.set(Storage.KEYS.HISTORY, []);
+    this.renderHistory();
+    this.showToast(history.length + ' tarefa(s) restaurada(s)', 'success');
   },
 
   // CONFIRM

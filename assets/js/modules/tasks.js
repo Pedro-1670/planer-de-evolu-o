@@ -441,7 +441,16 @@ const Tasks = {
       notes: data.notes || data.description || '',
       description: data.notes || data.description || '',
       priority: data.priority || 'media',
-      dueDate: data.dueDate || null,
+      dueDate: (() => {
+        if (data.dueDate) return data.dueDate;
+        const sc = data.scope || 'diario';
+        if (sc === 'semanal') return UI.getWeekRange().end;
+        if (sc === 'mensal') {
+          const d = new Date();
+          return new Date(d.getFullYear(), d.getMonth() + 1, 0).toISOString().split('T')[0];
+        }
+        return null;
+      })(),
       completed: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
